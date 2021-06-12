@@ -8,33 +8,51 @@ declare -A dict
 
 h=1
 t=0
-headCount=0
-tailCount=0
-headTailCount=0
-tailHeadCount=0
-headHeadCount=0
-tailTailCount=0
+tttCount=0
+tthCount=0
+thtCount=0
+thhCount=0
+httCount=0
+hthCount=0
+hhtCount=0
+hhhCount=0
 
-function getDoubletCombination()
+function getTripletCombination()
 {
-	doublet=$1
-        case $doublet in
-                $h$t)
-                        echo "HT"
-                        ((headTailCount++))
+	triplet=$1
+        case $triplet in
+                $t$t$t)
+                        echo "TTT"
+                        ((tttCount++))
                         ;;
-                $h$h)
-                        echo "HH"
-                        ((headHeadCount++))
+                $t$t$h)
+                        echo "TTH"
+                        ((tthCount++))
                         ;;
-                $t$h)
-                        echo "TH"
-                        ((tailHeadCount++))
+                $t$h$t)
+                        echo "THT"
+                        ((thtCount++))
                         ;;
-                $t$t)
-                        echo "TT"
-                        ((tailTailCount++))
+                $t$h$h)
+                        echo "THH"
+                        ((thhCount++))
                         ;;
+		$h$t$t)
+			echo "HTT"
+			((httCount++))
+			;;
+		$h$t$h)
+			echo "HTH"
+			((hthCount++))
+			;;
+		$h$h$t)
+			echo "HHT"
+			((hhtCount++))
+			;;
+		$h$h$h)
+			echo "HHH"
+			((hhhCount++))
+			;;
         esac
 
 }
@@ -48,17 +66,27 @@ for ((i=0;i<n;i++))
 do
 	flipCoin1=$((RANDOM%2))
 	flipCoin2=$((RANDOM%2))
-	doublet="$flipCoin1$flipCoin2"
-	getDoubletCombination $doublet
-	dict["$i"]="$( getDoubletCombination $doublet )"
+	flipCoin3=$((RANDOM%2))
+	triplet="$flipCoin1$flipCoin2$flipCoin3"
+	getTripletCombination $triplet
+	dict["$i"]="$( getTripletCombination $triplet )"
 
 done
-echo "Doublet combination in dictionary: " ${dict[@]}
-headTailPercent="$( getPercentage $headTailCount )"
-headHeadPercent="$( getPercentage $headHeadCount )"
-tailHeadPercent="$( getPercentage $tailHeadCount )"
-tailTailPercent="$( getPercentage $tailTailCount )"
-echo "percentage of headTail: "$headTailPercent
-echo "percentage of headHead: "$headHeadPercent
-echo "percentage of tailHead: "$tailHeadPercent
-echo "percentage of tailTail: "$tailTailPercent
+
+echo "Triplet combination in dictionary: " ${dict[@]}
+hhhPercent="$( getPercentage $hhhCount )"
+hthPercent="$( getPercentage $hthCount )"
+hhtPercent="$( getPercentage $hhtCount )"
+httPercent="$( getPercentage $httCount )"
+tttPercent="$( getPercentage $tttCount )"
+tthPercent="$( getPercentage $tthCount )"
+thtPercent="$( getPercentage $thtCount )"
+thhPercent="$( getPercentage $thhCount )"
+echo "percentage of TTT: "$tttPercent
+echo "percentage of TTH: "$tthPercent
+echo "percentage of THT: "$thtPercent
+echo "percentage of THH: "$thhPercent
+echo "peuircentage of HTT: "$httPercent
+echo "percentage of HTH: "$hthPercent
+echo "percentage of HHT: "$hhtPercent
+echo "percentage of HHH: "$hhhPercent
